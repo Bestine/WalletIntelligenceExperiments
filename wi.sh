@@ -2,7 +2,7 @@
 
 # WALLET INTELLIGENCE FROM FILE
 # Version v1
-# Last updated 2024.04.16
+# Last updated 2024.04.18
 # For any questions, please contact us at matt@thirdwavelabs.com
 
 # Requirements
@@ -23,9 +23,6 @@ else
     echo "API key file not found. Please ensure APIKEY.txt is in the same directory."
     exit 1
 fi
-
-api_key="YOUR_API_KEY"
-
 
 export api_key
 
