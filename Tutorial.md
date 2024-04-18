@@ -30,13 +30,20 @@ chmod +x wi.sh
 Add your Thirdwave API key to the script to begin the tests. 
 
 ### NO INPUT 
+```
 ./wi.sh 
-
+```
 ### TXT INPUT
+```
 cat ten.txt | ./wi.sh
+```
 
 ### TERMINAL flag
+```
 cat ten.txt | ./wi.sh -t 
-
+```
 ### ETHERSCAN EXPORT
+```
 cat BAYC.csv | sed '1d' | awk -F ',' '{print $1}' | sed 's/"//g' | ./wi.sh
+```
+
