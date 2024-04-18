@@ -6,3 +6,6 @@ Please install the following prior to downloading the files:
 
 1) Visual Studio Code (https://code.visualstudio.com/)
 2) Homebrew (https://brew.sh/)
+3) parallel (brew install parallel)
+4) jq (brew install jq)
+
