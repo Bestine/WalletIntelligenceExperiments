@@ -1,3 +1,11 @@
+# Wallet Intelligence Audience Audit
+# Pass Wallet Intelligence Report using `cat wallet_intelligence.csv | python3 audit.py`
+# Version 1.0 
+# Updated on 2024.4.11
+
+# Prerequisites 
+# If on Mac, install pandas and numby with `pip3 install pandas numpy`
+
 import sys
 import csv
 from datetime import datetime
