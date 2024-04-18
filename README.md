@@ -1,6 +1,6 @@
 # Wallet Intelligence Tutorial
 
-This tutorial will walk you through the basics of using Wallet Intelligence. 
+This tutorial will walk you through the basics of using Wallet Intelligence on a Mac. 
 
 ## PREREQUISITES 
 Please complete the following prior to downloading the tutorial:
