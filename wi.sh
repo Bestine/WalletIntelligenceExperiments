@@ -30,7 +30,7 @@ api_key="YOUR_API_KEY"
 export api_key
 
 if [[ "$api_key" == "YOUR_API_KEY" ]]; then
-    echo "It looks like you haven't added your Thirdwave API key to the script. Please update the script with your API key to continue."
+    echo "It looks like you haven't added your Thirdwave API key to the script. Please update APIKEY.txt with your API key to continue. More info at https://docs.thirdwavelabs.com"
     exit 1
 fi
 
