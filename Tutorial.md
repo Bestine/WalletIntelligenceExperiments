@@ -46,7 +46,7 @@ cat ten.txt | ./wi.sh -t
 Pull Audience Statistics for NFT or Token Holders
 
 1. Navigate to OpenSea to find the Etherscan Contract link (e.g. https://opensea.io/collection/sugartownoras)
-2. Open Etherscan Export Data Page and Select “ERC-721 or ERC-1155" (https://etherscan.io/exportData?type=tokenholders-nft&contract=0xd564c25b760cb278a55bdd98831f4ff4b6c97b38)
+2. Open [Etherscan Export Data Page]([url](https://etherscan.io/exportData?type=tokenholders-nft&contract=0xd564c25b760cb278a55bdd98831f4ff4b6c97b38)) and Select “ERC-721 or ERC-1155" 
 3. It’s possible to extract wallets from the default Etherscan Export and generate report with this code:
 ```
 cat etherscan_export.csv | sed '1d' | awk -F ',' '{print $1}' | sed 's/"//g' | ./wi.sh
