@@ -17,8 +17,8 @@
 # cat <list of wallets>.txt | ./wi.sh -t
 
 # Replace YOUR_API_KEY in apikey.txt with your API key from Thirdwave. More info at https://docs.thirdwavelabs.com
-if [ -f "APIKEY.txt" ]; then
-    api_key=$(<APIKEY.txt)
+if [ -f "apikey.txt" ]; then
+    api_key=$(<apikey.txt)
 else
     echo "API key file not found. Please ensure APIKEY.txt is in the same directory."
     exit 1
