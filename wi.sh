@@ -6,46 +6,73 @@
 # For any questions, please contact us at matt@thirdwavelabs.com
 
 # Requirements
-# This project relies on specific tools to handle data processing and task execution efficiently:
-# - `jq` is used for parsing Thirdwave API responses.
-# - `parallel` is used for speeding up processing times.
+# - `jq` for parsing Thirdwave API responses.
+# - `parallel` for speeding up processing times.
 
-# How it works
-# The following command will output a CSV of Wallet Intelligence data for any list of wallets
-# cat <list of wallets>.txt | ./wi.sh 
-# Add the -t flag to output directly to terminal 
-# cat <list of wallets>.txt | ./wi.sh -t
+# Initial flag setup
+output_to_terminal=false
 
-# Replace YOUR_API_KEY in apikey.txt with your API key from Thirdwave. More info at https://docs.thirdwavelabs.com
+# Check for the presence of the -t flag
+while getopts ":t" opt; do
+  case $opt in
+    t)
+      output_to_terminal=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND-1))
+
+# Check for API key
 if [ -f "apikey.txt" ]; then
     api_key=$(<apikey.txt)
 else
-    echo "API key file not found. Please ensure APIKEY.txt is in the same directory."
+    echo "API key file not found. Please ensure apikey.txt is in the same directory."
     exit 1
 fi
 
 export api_key
 
 if [[ "$api_key" == "YOUR_API_KEY" ]]; then
-    echo "It looks like you haven't added your Thirdwave API key to the script. Please update APIKEY.txt with your API key to continue. More info at https://docs.thirdwavelabs.com"
+    echo "Update apikey.txt with your API key. More info at https://docs.thirdwavelabs.com"
     exit 1
 fi
 
 # Record the start time
 start_time=$(date +"%Y-%m-%d %H:%M:%S")
 
-if [ -t 0 ]; then
-echo
-echo "Welcome to Wallet Intelligence!"
-echo "To run the API script, provide wallet addresses via stdin."
-echo "Example usage: cat wallet_addresses.txt | ./wi.sh"
-echo
-exit 1
+# Check if an input file is provided
+if [[ -z "$1" ]]; then
+    echo "Welcome to Wallet Intelligence!"
+    echo "Please provide an input file containing wallet addresses."
+    echo "./wi.sh <wallets>.txt
+    exit 1
+fi
+
+input_file="$1"
+
+# Ensure the input file exists and is readable
+if [ ! -f "$input_file" ]; then
+    echo "Error: File not found or not readable: $input_file"
+    exit 1
+fi
+
+# Ensure the reports directory exists
+mkdir -p reports
+
+# Conditionally set the default output file based on the flag
+if [[ "$output_to_terminal" == "true" ]]; then
+    output_file=""
+else
+    output_file="reports/$(date +"%Y-%m-%d-%H-%M.csv")"
+    echo "Wallet Address,Response,Is Bot,Spend,Total Balance,Transaction Count,Created At,Hodler Score,Temporal Activity,Transaction Velocity,Continuous Engagement,Funding Network" > "$output_file"
 fi
 
 # Function to process each wallet address
 process_wallet() {
-
     address="$1"
     output_file="$2"
     temp_file=$(mktemp)
@@ -95,23 +122,22 @@ process_wallet() {
     rm "$temp_file"
 }
 
+# Export the process_wallet function to be used by parallel
 export -f process_wallet
 
-# Set the default output file
-output_file=$(date +"%Y-%m-%d-%H-%M.csv")
-
-# Check if the -t flag is provided
-if [[ "$1" == "-t" ]]; then
-  output_file=""
+# Adjust parallel command to process wallets
+if [[ "$output_to_terminal" == "true" ]]; then
+    parallel -j 10 --bar process_wallet {} :::: "$input_file"
 else
-  echo "Wallet Address,Response,Is Bot,Spend,Total Balance,Transaction Count,Created At,Hodler Score,Temporal Activity,Transaction Velocity,Continuous Engagement,Funding Network" > "$output_file"
+    parallel -j 10 --bar process_wallet {} "$output_file" :::: "$input_file"
 fi
 
-# Read wallet addresses from stdin and process them in parallel with a limit of 10 jobs
-parallel -j 10 --bar process_wallet ::: $(</dev/stdin) ::: "$output_file"
-
 # After processing, count the rows in the output CSV file, excluding the header row
-request_count=$(awk 'NR > 1' "$output_file" | wc -l)
+if [[ "$output_to_terminal" == "false" ]]; then
+    request_count=$(awk 'NR > 1' "$output_file" | wc -l)
+else
+    request_count=$(echo "$request_count" | wc -l)
+fi
 
 # Record the finish time
 finish_time=$(date +"%Y-%m-%d %H:%M:%S")
@@ -134,9 +160,10 @@ seconds=$((total_seconds % 60))
 echo "Total Time:  $minutes minutes $seconds seconds"
 echo
 
-# The request count and file path are relevant in both cases but handled differently
-if [[ -n "$output_file" ]]; then
-echo "CSV file generated: $output_file"
-echo "Wallets Processed:  $(echo $request_count | xargs) "
-echo
+# Check and adjust final output handling based on the output destination
+if [[ "$output_to_terminal" == "false" ]]; then
+    echo "CSV file generated: $output_file"
+    echo "Wallets Processed:  $(echo $request_count | xargs)"
+else
+    echo "Output sent to terminal."
 fi
