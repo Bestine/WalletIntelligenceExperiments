@@ -46,9 +46,11 @@ start_time=$(date +"%Y-%m-%d %H:%M:%S")
 
 # Check if an input file is provided
 if [[ -z "$1" ]]; then
+    echo
     echo "Welcome to Wallet Intelligence!"
     echo "Please provide an input file containing wallet addresses."
-    echo "./wi.sh <wallets>.txt
+    echo "./wi.sh <wallets>.txt"
+    echo
     exit 1
 fi
 
