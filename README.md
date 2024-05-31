@@ -1,4 +1,4 @@
-# Wallet Intelligence Tutorial
+# Wallet Intelligence Experiments
 
 This tutorial will walk you through the basics of using Wallet Intelligence on a Mac. 
 
