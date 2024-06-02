@@ -286,8 +286,9 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python3 audit.py <file>.csv [-html|-md|-txt|-csv] [-s]")
         sys.exit(1)
-
+    
     csv_file = sys.argv[1]
+    print(csv_file)
     output_format = None
     summary_only = False
 
@@ -303,6 +304,7 @@ if __name__ == "__main__":
 
     if output_format:
         sys.stdout = StringIO()
+        print(type(sys.stdout))
 
     main(csv_file, output_format, summary_only)
     sys.stdout = sys.__stdout__
