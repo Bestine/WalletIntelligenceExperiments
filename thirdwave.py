@@ -136,7 +136,7 @@ if not output_to_terminal:
             "Transaction Velocity",
             "Continuous Engagement",
             "Funding Network"
-        ])
+            ])
 
         if use_batch_endpoint:
             total_batches = (len(wallet_addresses) + batch_size - 1) // batch_size
