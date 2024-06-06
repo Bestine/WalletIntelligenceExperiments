@@ -51,7 +51,7 @@ def identify_anomalies(wallet_data):
 def calculate_wallet_age_stats(wallet_data):
     """Calculate wallet age statistics."""
     wallet_data['Created At'] = pd.to_datetime(wallet_data['Created At'], format=DATE_FORMAT, errors='coerce')
-    current_date = datetime(2024, 4, 30)
+    current_date = datetime.now()
     wallet_data['Age'] = (current_date - wallet_data['Created At']).dt.days
     median_age = wallet_data['Age'].median()
     mean_age = wallet_data['Age'].mean()
@@ -61,7 +61,11 @@ def calculate_wallet_age_stats(wallet_data):
 
 def potential_non_bots(wallet_data):
     """Identify potential non-bots based on transaction count."""
-    potential_bots = wallet_data[wallet_data['Is Bot'] == False].sort_values(by='Transaction Count', ascending=False).head(10)
+    wallet_data["Transaction Count"] = pd.to_numeric(wallet_data["Transaction Count"], errors='coerce')
+    print(wallet_data["Is Bot"].unique())
+    
+    
+    potential_bots = wallet_data[wallet_data['Is Bot'] == 'False'].sort_values(by='Transaction Count', ascending=False).head(10)
     potential_bots['Transaction Count'] = potential_bots['Transaction Count'].astype(int)
 
     if not potential_bots.empty:
@@ -151,13 +155,19 @@ def print_bot_summary(wallet_data):
 def main(csv_file, output_format=None, summary_only=False):
     """Main function to perform the wallet intelligence audience audit."""
     wallet_data = pd.read_csv(csv_file)
-    columns_to_clean = ['Spend', 'Total Balance', 'Transaction Count', 'Hodler Score', 'Spend Games']
+    columns_to_clean = ['Spend', 'Total Balance', 'Transaction Count', 
+                        'Hodler Score', 'Spend Games']
     for column in columns_to_clean:
         wallet_data[column] = pd.to_numeric(wallet_data[column], errors='coerce')
 
-    bool_columns = ['Is Bot', 'Temporal Activity', 'Transaction Velocity', 'Continuous Engagement', 'Funding Network']
+    bool_columns = ['Is Bot', 'Temporal Activity', 'Transaction Velocity', 
+                    'Continuous Engagement', 'Funding Network']
     for column in bool_columns:
-        wallet_data[column] = wallet_data[column].map({'True': True, 'False': False, 'unknown': np.nan, True: True, False: False})
+        wallet_data[column] = wallet_data[column].map({'True': True, 
+                                                       'False': False, 
+                                                       'unknown': np.nan, 
+                                                       True: True, 
+                                                       False: False})
 
     total_wallets = len(wallet_data)
     unique_wallets = wallet_data['Wallet Address'].nunique()
@@ -284,9 +294,32 @@ def main(csv_file, output_format=None, summary_only=False):
 
 if __name__ == "__main__":
 
-    value = 1084
-    curr = format_currency(value)
-    print(curr)
+    # function 1
+    value = 1086
+    formatted_currency = format_currency(value)
+    print(formatted_currency)
+
+    # function 2
+    title = "WALLET EXPERIMENTS I"
+    formated_title = format_section_heading(title)
+    print(formated_title)
+
+    # function 3
+    wallet_data  = pd.read_csv("audienceaudit/ExampleReport.csv")
+    identify_anomalies(wallet_data)
+
+    # function 4
+    median_age, mean_age, min_age, max_age = calculate_wallet_age_stats(wallet_data)
+    print(median_age, mean_age, min_age, max_age)
+
+    print("Earliest Date: ", wallet_data["Created At"].min())
+    print("Latest Date: ", wallet_data["Created At"].max())
+
+    # function 5
+    potential_non_bots(wallet_data)
+
+
+
 
 
 
