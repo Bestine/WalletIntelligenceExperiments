@@ -61,11 +61,7 @@ def calculate_wallet_age_stats(wallet_data):
 
 def potential_non_bots(wallet_data):
     """Identify potential non-bots based on transaction count."""
-    wallet_data["Transaction Count"] = pd.to_numeric(wallet_data["Transaction Count"], errors='coerce')
-    print(wallet_data["Is Bot"].unique())
-    
-    
-    potential_bots = wallet_data[wallet_data['Is Bot'] == 'False'].sort_values(by='Transaction Count', ascending=False).head(10)
+    potential_bots = wallet_data[wallet_data['Is Bot'] == False].sort_values(by='Transaction Count', ascending=False).head(10)
     potential_bots['Transaction Count'] = potential_bots['Transaction Count'].astype(int)
 
     if not potential_bots.empty:
@@ -111,8 +107,13 @@ def daily_transactions_leaderboard(wallet_data):
     """Identify the top 10 wallets with the highest daily transaction rate."""
     # Filter wallets based on criteria
     filtered_wallets = wallet_data[(wallet_data['Is Bot'] == False) & (wallet_data['Age'] > 10)].copy()
+
+    filtered_wallets['Transaction Count'] = pd.to_datetime(filtered_wallets['Transaction Count'], errors="coerce")
     
     filtered_wallets.loc[:, 'Daily Transaction Rate'] = filtered_wallets['Transaction Count'] / filtered_wallets['Age']
+
+    print("FILTERED WALLETS: ", filtered_wallets)
+    
     leaderboard = filtered_wallets.nlargest(10, 'Daily Transaction Rate')
 
     print(format_section_heading("Daily Transactions Leaderboard (Non-Bots, >10 Days Old)"))
@@ -316,7 +317,20 @@ if __name__ == "__main__":
     print("Latest Date: ", wallet_data["Created At"].max())
 
     # function 5
-    potential_non_bots(wallet_data)
+    # potential_non_bots(wallet_data) # tested and corrected 
+
+    # function 6
+    oldest_wallets(wallet_data)
+
+    # function 7
+    # daily_transactions_leaderboard(wallet_data) # not yet tested
+
+    # function 8
+    print_bot_summary(wallet_data)
+
+    # function 9
+    main("audienceaudit/ExampleReport.csv")
+
 
 
 
