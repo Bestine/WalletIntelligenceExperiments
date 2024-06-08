@@ -11,6 +11,7 @@ import sys
 from datetime import datetime
 from io import StringIO
 import logging
+# import pytz
 
 import numpy as np
 import pandas as pd
@@ -132,25 +133,22 @@ def daily_transactions_leaderboard(wallet_data):
     for _, row in leaderboard.iterrows():
         print(f"{row['Wallet Address']:<{col_1_width}} | {row['Daily Transaction Rate']:>{col_2_width}.2f} | {row['Age']:>{col_3_width}.0f}")
 
-def daily_transactions_leaderboard_modified():
+def daily_transactions_leaderboard_modified(wallet_data):
     """
     A new function to correct the issue in the original one 
     """
-    wallet_data = pd.read_csv("audienceaudit/ExampleReport.csv")
-    print(wallet_data.columns)
 
     # Calculate wallet data age in days 
-    import pytz
-    current_time = datetime.now(pytz.utc)
-    wallet_data["Created At"] = pd.to_datetime(wallet_data["Created At"], errors="coerce")
+    current_time = datetime.now()
+    #wallet_data["Created At"] = pd.to_datetime(wallet_data["Created At"], errors="coerce")
     wallet_data["Age"] = (current_time - wallet_data['Created At']).dt.days
 
     # Filter based on the criteria above(original function)
-    filtered_wallets = wallet_data[(wallet_data['Is Bot'] == 'False') & (wallet_data['Age'] > 10)]
+    filtered_wallets = wallet_data[(wallet_data['Is Bot'] == False) & (wallet_data['Age'] > 10)].copy()
     
     # calculate the daily transaction rate 
-    filtered_wallets['Transaction Count'] = pd.to_numeric(filtered_wallets['Transaction Count'], errors="coerce")
-    filtered_wallets['Daily Transaction Rate'] = filtered_wallets['Transaction Count'] / filtered_wallets['Age']
+    #filtered_wallets['Transaction Count'] = pd.to_numeric(filtered_wallets['Transaction Count'], errors="coerce")
+    filtered_wallets.loc[:, 'Daily Transaction Rate'] = filtered_wallets['Transaction Count'] / filtered_wallets['Age']
 
     leaderboard = filtered_wallets.nlargest(10, 'Daily Transaction Rate')
 
@@ -326,7 +324,7 @@ def main(csv_file, output_format=None, summary_only=False):
 
     print("DOES ANALYSIS CONTINUE?")
 
-    daily_transactions_leaderboard(wallet_data)  
+    daily_transactions_leaderboard_modified(wallet_data)  
     print()
 
     if output_format:
@@ -338,10 +336,10 @@ def main(csv_file, output_format=None, summary_only=False):
 if __name__ == "__main__":
 
     # daily leaderboard modified
-    daily_transactions_leaderboard_modified()
+    # daily_transactions_leaderboard_modified()
 
     # function 9
-    # main("audienceaudit/ExampleReport.csv")
+    main("audienceaudit/ExampleReport.csv")
 
 
 
