@@ -112,7 +112,7 @@ def daily_transactions_leaderboard(wallet_data):
     
     filtered_wallets.loc[:, 'Daily Transaction Rate'] = filtered_wallets['Transaction Count'] / filtered_wallets['Age']
 
-    print("FILTERED WALLETS: ", filtered_wallets)
+    print("FILTERED WALLETS: ", filtered_wallets) # Check if exists on the original document
     
     leaderboard = filtered_wallets.nlargest(10, 'Daily Transaction Rate')
 
@@ -131,6 +131,45 @@ def daily_transactions_leaderboard(wallet_data):
 
     for _, row in leaderboard.iterrows():
         print(f"{row['Wallet Address']:<{col_1_width}} | {row['Daily Transaction Rate']:>{col_2_width}.2f} | {row['Age']:>{col_3_width}.0f}")
+
+def daily_transactions_leaderboard_modified():
+    """
+    A new function to correct the issue in the original one 
+    """
+    wallet_data = pd.read_csv("audienceaudit/ExampleReport.csv")
+    print(wallet_data.columns)
+
+    # Calculate wallet data age in days 
+    import pytz
+    current_time = datetime.now(pytz.utc)
+    wallet_data["Created At"] = pd.to_datetime(wallet_data["Created At"], errors="coerce")
+    wallet_data["Age"] = (current_time - wallet_data['Created At']).dt.days
+
+    # Filter based on the criteria above(original function)
+    filtered_wallets = wallet_data[(wallet_data['Is Bot'] == 'False') & (wallet_data['Age'] > 10)]
+    
+    # calculate the daily transaction rate 
+    filtered_wallets['Transaction Count'] = pd.to_numeric(filtered_wallets['Transaction Count'], errors="coerce")
+    filtered_wallets['Daily Transaction Rate'] = filtered_wallets['Transaction Count'] / filtered_wallets['Age']
+
+    leaderboard = filtered_wallets.nlargest(10, 'Daily Transaction Rate')
+
+    print(format_section_heading("Daily Transactions Leaderboard (Non-Bots, >10 Days Old)"))
+
+    col_1_name = "Wallet Address"
+    col_1_width = 42
+    col_2_name = "Daily Transactions"
+    col_2_width = 20
+    col_3_name = "Days Old"
+    col_3_width = 10
+
+    header_row = f"{col_1_name:<{col_1_width}} | {col_2_name:>{col_2_width}} | {col_3_name:>{col_3_width}}"
+    print(header_row)
+    # print("-" * len(header_row))
+
+    for _, row in leaderboard.iterrows():
+        print(f"{row['Wallet Address']:<{col_1_width}} | {row['Daily Transaction Rate']:>{col_2_width}.2f} | {row['Age']:>{col_3_width}.0f}")
+
 
 def print_bot_summary(wallet_data):
     """Print a summary of bot behaviors."""
@@ -284,6 +323,9 @@ def main(csv_file, output_format=None, summary_only=False):
 
     potential_non_bots(wallet_data)
     oldest_wallets(wallet_data)
+
+    print("DOES ANALYSIS CONTINUE?")
+
     daily_transactions_leaderboard(wallet_data)  
     print()
 
@@ -295,41 +337,11 @@ def main(csv_file, output_format=None, summary_only=False):
 
 if __name__ == "__main__":
 
-    # function 1
-    value = 1086
-    formatted_currency = format_currency(value)
-    print(formatted_currency)
-
-    # function 2
-    title = "WALLET EXPERIMENTS I"
-    formated_title = format_section_heading(title)
-    print(formated_title)
-
-    # function 3
-    wallet_data  = pd.read_csv("audienceaudit/ExampleReport.csv")
-    identify_anomalies(wallet_data)
-
-    # function 4
-    median_age, mean_age, min_age, max_age = calculate_wallet_age_stats(wallet_data)
-    print(median_age, mean_age, min_age, max_age)
-
-    print("Earliest Date: ", wallet_data["Created At"].min())
-    print("Latest Date: ", wallet_data["Created At"].max())
-
-    # function 5
-    # potential_non_bots(wallet_data) # tested and corrected 
-
-    # function 6
-    oldest_wallets(wallet_data)
-
-    # function 7
-    # daily_transactions_leaderboard(wallet_data) # not yet tested
-
-    # function 8
-    print_bot_summary(wallet_data)
+    # daily leaderboard modified
+    daily_transactions_leaderboard_modified()
 
     # function 9
-    main("audienceaudit/ExampleReport.csv")
+    # main("audienceaudit/ExampleReport.csv")
 
 
 
