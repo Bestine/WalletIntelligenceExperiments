@@ -1,1 +1,137 @@
 
+===========================================================================
+> Summary of Analysis
+===========================================================================
+
+Total Wallets Submitted: 10000
+Unique Wallets Analyzed: 10000 (Duplicates Removed: 0)
+
+Normal Wallets (IsBot: False, Outbound Activity: True): 8995 (89.95%)
+Fresh Wallets (IsBot: False, Outbound Activity: False): 1005 (10.05%)
+Bot Wallets (IsBot: True): 0 (0.00%)
+
+
+===========================================================================
+> Wallet Metrics
+===========================================================================
+
+Metric                         | Median     | Average    | Min        | Max       
+Spend per Wallet               | $65        | $14,995    | $0         | $18,208,139
+Balance per Wallet             | $0         | $189       | $0         | $334,310  
+Transaction Count per Wallet   | 10         | 81         | 0          | 32943     
+Spend Games per Wallet         | $0         | $42        | $0         | $131,336  
+Transaction Value              | $186       | N/A        | N/A        | N/A       
+Wallet Age (days)              | 179        | 389        | 18         | 2823      
+
+===========================================================================
+> Bot Report
+===========================================================================
+
+--- IsBot: False ---
+Median Spend: $65 (Count: 9593)
+Median Transaction Count: 10 (Count: 9593)
+
+--- IsBot: True ---
+Median Spend: N/A (Count: 0)
+Median Transaction Count: nan (Count: 0)
+
+--- Bot Behaviors ---
+    Temporal Activity: 0 (0.00%)
+ Transaction Velocity: 0 (0.00%)
+Continuous Engagement: 0 (0.00%)
+      Funding Network: 0 (0.00%)
+
+===========================================================================
+> Anomaly Detection
+===========================================================================
+
+--- Anomalies in Spend ---
+Wallet Address                             |          Spend
+0x60a71287353f3ac632f3e75fd1be532850aa5f4d |    $18,208,139
+0x90598faecb13b32b33e0d2ad07e74eace9afd64f |    $11,498,008
+0x1fd3bb1138f6b1970a5f89433d8da1487ea2ab27 |     $9,893,189
+0xfab53b966c50d02f9e1096ea951d47b80b01da74 |     $6,327,723
+0xcf2b7c6bc98bfe0d6138a25a3b6162b51f75e05d |     $5,834,790
+0x9d969f47c7d503bb56556bec3ab4115deae60122 |     $4,327,200
+0x40c949ced4fb14727312b7dcd79847b3146af566 |     $3,141,769
+0x7f8c1877ed0da352f78be4fe4cda58bb804a30df |     $2,178,143
+0x40314d0d54b7ec9ec72f23c685885db1e610f5cf |     $2,171,159
+0x74809682c8aeaf56ebb6384e86a5a6fc972e72df |     $2,165,514
+0x9fc7eeacd27d38a436462bb43ad97e49106820d7 |     $2,089,052
+0x014a8817d695bee3ec371d245af9be00f8837354 |     $2,038,212
+0x4ae50051b8dc10d8501041e2eea93341db29b52c |     $1,555,716
+0xe073182d644ebb5290cfa6915ba94312fc73a679 |     $1,504,657
+0x23a36c0587455a6a3c1ed7ada7769f302aa7bd92 |     $1,497,339
+0x612c45551195f15bf05d722b9f137c914b077fc7 |     $1,492,402
+0xa207ac236dfdee6f885d0cc1d0c8100b46fa91ee |     $1,326,518
+0xb9fe36cac4174009dbcd11ac98db0d21c70f55cc |     $1,310,735
+0x01a35017c1475e9c4daa88771ee5bc9ee427c28f |     $1,230,042
+0x64362046cb1419a89ac39e20eeb64945298ea85d |     $1,208,728
+0x67538b6d12c4755cf45c4681c02ead08f9bd6ed3 |     $1,201,917
+0x4c55c41bd839b3552fb2abecacfdf4a5d2879cb9 |     $1,187,947
+
+--- Anomalies in Total Balance ---
+Wallet Address                             |  Total Balance
+0xfab53b966c50d02f9e1096ea951d47b80b01da74 |       $334,310
+0x90598faecb13b32b33e0d2ad07e74eace9afd64f |       $285,080
+0x08b594f964c9197523676f0baf28003d1b200b50 |        $71,526
+0xcf2b7c6bc98bfe0d6138a25a3b6162b51f75e05d |        $68,007
+0xe073182d644ebb5290cfa6915ba94312fc73a679 |        $60,793
+0x64362046cb1419a89ac39e20eeb64945298ea85d |        $58,628
+0xe4492102e873244856cfda57ecc93e63618bd2b1 |        $56,158
+0x325065dfeae3910ed25500ff8cddda79e4f8b466 |        $47,503
+0x453907c0a75e6d698c6a9430e831c41f50c2522e |        $37,060
+0xb4c4d1bb09700036d9527348e2b8da2ae1c3c901 |        $30,830
+0xc78e76838d826e5d4015bed523caa17978578d42 |        $28,361
+0x2f3b7d3cf5145137e47c9dd8ff8c49fe8896a72c |        $26,134
+0x1bb8288153a0d4ad8dbb1fea6e87d3ad4b92aa1e |        $22,778
+
+
+===========================================================================
+> Top 10 Transaction Count, Non-Bots
+===========================================================================
+
+Wallet Address                             |    Transaction Count
+0x23a36c0587455a6a3c1ed7ada7769f302aa7bd92 |                32943
+0xff4f7b726ee86f810531d2842b3bdd8a512db594 |                23038
+0x80cffdca4d7e05eb25e703a183e98c7a4094eec0 |                21236
+0x42838970285c5fef7e2f408a059eb6410bc60518 |                11538
+0xa4285637d7037ff7edd0301d15027079767712f3 |                10899
+0x31929e20d3fc56c2eb70d2089ac48cd663c71647 |                10283
+0x412be8a890b7ace0fe6495e9f9fb3fd8c098175a |                 9984
+0x9fc7eeacd27d38a436462bb43ad97e49106820d7 |                 9220
+0x612c45551195f15bf05d722b9f137c914b077fc7 |                 8694
+0xe8adc25d117da8b31d371657c894efd176e20914 |                 7758
+
+===========================================================================
+> Oldest Wallets
+===========================================================================
+
+Wallet Address                             | Created At           | Days Old
+0x000000000000000000000000000000000000dead | 2016-09-15 11:11:32  |     2823
+0xcf2b7c6bc98bfe0d6138a25a3b6162b51f75e05d | 2017-06-24 09:57:04  |     2541
+0x487b8d3847d8718267a07c8c7e8ed354983bf34c | 2017-09-22 22:29:39  |     2451
+0xe141c18ec30420679d144cb1d8f11709fa5f95c5 | 2017-10-08 02:55:55  |     2436
+0x46d5ebdbc2e3ec188b7ba70d32148f08081e769e | 2017-10-19 11:53:37  |     2424
+0xc56f9382a78d81e41b4556dbff5f8f4697c19874 | 2017-10-28 08:02:52  |     2416
+0xbf890e6556c826231cbedece4593789eafdcc41c | 2017-11-23 05:18:12  |     2390
+0x01a35017c1475e9c4daa88771ee5bc9ee427c28f | 2017-11-26 18:09:02  |     2386
+0x4ae50051b8dc10d8501041e2eea93341db29b52c | 2017-12-04 18:15:08  |     2378
+0x0424272051b8871b2a604ef88a6d014bb54f6fa2 | 2017-12-05 05:42:55  |     2378
+
+===========================================================================
+> Daily Transactions Leaderboard (Non-Bots, >10 Days Old)
+===========================================================================
+
+Wallet Address                             |   Daily Transactions |   Days Old
+0x23a36c0587455a6a3c1ed7ada7769f302aa7bd92 |                29.73 |       1108
+0x80cffdca4d7e05eb25e703a183e98c7a4094eec0 |                16.83 |       1262
+0x67f3c18339ac0da29be9573d559a1291100b7c7b |                13.28 |         81
+0x42d2ae193484470feb0674e6c9f4949b796f5c37 |                12.17 |        426
+0xff4f7b726ee86f810531d2842b3bdd8a512db594 |                11.52 |       1999
+0x31929e20d3fc56c2eb70d2089ac48cd663c71647 |                11.26 |        913
+0x412be8a890b7ace0fe6495e9f9fb3fd8c098175a |                10.78 |        926
+0xa4285637d7037ff7edd0301d15027079767712f3 |                10.62 |       1026
+0x42838970285c5fef7e2f408a059eb6410bc60518 |                10.21 |       1130
+0x559d70af6cd6eb92a27c1ffbc4fd481069f28e07 |                10.02 |         48
+

@@ -211,3 +211,18 @@ def generate_report(csv_file, output, output_format):
 
     print(f"\nReport generated: {output_file}")
 
+
+if __name__ == "__main__":
+    # read the report output file as a str
+    with open("audienceaudit/report_output.txt", "r") as output_file:
+        read_report = output_file.read()#.replace("\n", "")
+
+    # print(read_report)
+
+    # Now format as html 
+    html_report = format_html_report(read_report)
+    # print(html_report)
+
+    # Format as markdown 
+    markdown_report = format_markdown_report(read_report)
+    print(markdown_report)

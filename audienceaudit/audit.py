@@ -342,36 +342,35 @@ if __name__ == "__main__":
     current_dir = os.getcwd()
     output_filepath = current_dir + "/audienceaudit/report_output.txt"
     sys.stdout = open(output_filepath, "w")
-    print ("test sys.stdout")
 
 
-    # Testing the main function 
-    # main("audienceaudit/ExampleReport.csv")
+    # Testing the main function and directing it to an output file
+    main("audienceaudit/ExampleReport.csv")
 
 
 
-    if len(sys.argv) < 2:
-        print("Usage: python3 audit.py <file>.csv [-html|-md|-txt|-csv] [-s]")
-        sys.exit(1)
+    # if len(sys.argv) < 2:
+    #     print("Usage: python3 audit.py <file>.csv [-html|-md|-txt|-csv] [-s]")
+    #     sys.exit(1)
     
-    csv_file = sys.argv[1]
-    print(csv_file)
-    output_format = None
-    summary_only = False
+    # csv_file = sys.argv[1]
+    # print(csv_file)
+    # output_format = None
+    # summary_only = False
 
-    if len(sys.argv) > 2:
-        for arg in sys.argv[2:]:
-            if arg in ['-html', '-md', '-txt', '-csv']:
-                output_format = arg[1:]
-            elif arg == '-s':
-                summary_only = True
-            else:
-                print("Invalid argument. Supported arguments: -html, -md, -txt, -csv, -s")
-                sys.exit(1)
+    # if len(sys.argv) > 2:
+    #     for arg in sys.argv[2:]:
+    #         if arg in ['-html', '-md', '-txt', '-csv']:
+    #             output_format = arg[1:]
+    #         elif arg == '-s':
+    #             summary_only = True
+    #         else:
+    #             print("Invalid argument. Supported arguments: -html, -md, -txt, -csv, -s")
+    #             sys.exit(1)
 
-    if output_format:
-        sys.stdout = StringIO()
-        print(type(sys.stdout))
+    # if output_format:
+    #     sys.stdout = StringIO()
+    #     print(type(sys.stdout))
 
-    main(csv_file, output_format, summary_only)
-    sys.stdout = sys.__stdout__
+    # main(csv_file, output_format, summary_only)
+    # sys.stdout = sys.__stdout__
