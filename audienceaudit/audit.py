@@ -336,6 +336,15 @@ if __name__ == "__main__":
     # daily leaderboard modified
     # daily_transactions_leaderboard_modified(wallet_data)
 
+    # Direct the output to a txt file
+    import os
+    print(os.listdir())
+    current_dir = os.getcwd()
+    output_filepath = current_dir + "/audienceaudit/report_output.txt"
+    sys.stdout = open(output_filepath, "w")
+    print ("test sys.stdout")
+
+
     # Testing the main function 
     # main("audienceaudit/ExampleReport.csv")
 
