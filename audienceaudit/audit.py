@@ -338,7 +338,6 @@ if __name__ == "__main__":
 
     # Direct the output to a txt file
     import os
-    print(os.listdir())
     current_dir = os.getcwd()
     output_filepath = current_dir + "/audienceaudit/report_output.txt"
     sys.stdout = open(output_filepath, "w")
