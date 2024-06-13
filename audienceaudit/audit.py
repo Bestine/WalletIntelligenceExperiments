@@ -11,6 +11,7 @@ import sys
 from datetime import datetime
 from io import StringIO
 import logging
+import os
 # import pytz
 
 import numpy as np
@@ -333,13 +334,9 @@ def main(csv_file, output_format=None, summary_only=False):
 
 if __name__ == "__main__":
 
-    # daily leaderboard modified
-    # daily_transactions_leaderboard_modified(wallet_data)
-
     # Direct the output to a txt file
-    import os
     current_dir = os.getcwd()
-    output_filepath = current_dir + "/audienceaudit/report_output.txt"
+    output_filepath = current_dir + "/audienceaudit/report_output.html"
     sys.stdout = open(output_filepath, "w")
 
 
