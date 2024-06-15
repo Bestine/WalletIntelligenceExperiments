@@ -168,7 +168,7 @@ if not output_to_terminal:
 
                 if status_code == 200:
                     response_body = response.json()
-                    for i, wallet_data in enumerate(response_body):
+                    for i, wallet_data in enumerate(response_body["data"]):
                         if wallet_data is not None:
                             csv_writer.writerow([
                                 wallet_data.get("address", "unknown"),
@@ -223,6 +223,7 @@ if not output_to_terminal:
                             "unknown"
                         ])
         else:
+            print("NOT USED BATCH ENDPOINT!!!")
             total_addresses = len(wallet_addresses)
             processed_count = 0
 
@@ -270,17 +271,17 @@ if not output_to_terminal:
                         address,
                         status_code,
                         "Success",
-                        response_body.get("totalBalance", "unknown"),
-                        response_body.get("transactionCount", "unknown"),
-                        response_body.get("spend", "unknown"),
-                        response_body.get("spendGames", "unknown"),
-                        response_body.get("createdAt", "unknown"),
-                        response_body.get("hodlerScore", "unknown"),
-                        response_body.get("isBot", False),
-                        response_body.get("botBehaviors", {}).get("temporalActivity", False),
-                        response_body.get("botBehaviors", {}).get("transactionVelocity", False),
-                        response_body.get("botBehaviors", {}).get("continuousEngagement", False),
-                        response_body.get("botBehaviors", {}).get("fundingNetwork", False)
+                        response_body["data"].get("totalBalance", "unknown"),
+                        response_body["data"].get("transactionCount", "unknown"),
+                        response_body["data"].get("spend", "unknown"),
+                        response_body["data"].get("spendGames", "unknown"),
+                        response_body["data"].get("createdAt", "unknown"),
+                        response_body["data"].get("hodlerScore", "unknown"),
+                        response_body["data"].get("isBot", False),
+                        response_body["data"].get("botBehaviors", {}).get("temporalActivity", False),
+                        response_body["data"].get("botBehaviors", {}).get("transactionVelocity", False),
+                        response_body["data"].get("botBehaviors", {}).get("continuousEngagement", False),
+                        response_body["data"].get("botBehaviors", {}).get("fundingNetwork", False)
                     ])
                 else:
                     error_message = response_body.get("error", {}).get("message", "")
@@ -331,7 +332,7 @@ else:
 
             if status_code == 200:
                 response_body = response.json()
-                for i, wallet_data in enumerate(response_body):
+                for i, wallet_data in enumerate(response_body["data"]):
                     if wallet_data is not None:
                         print(f"{status_code} {wallet_data.get('address', 'unknown')} {json.dumps(wallet_data)}\n")
                     else:
