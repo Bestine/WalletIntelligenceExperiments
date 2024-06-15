@@ -33,7 +33,8 @@ start_time = datetime.now()
 
 # Check for API key
 try:
-    with open("apikey.txt", "r") as file:
+    # with open("apikey.txt", "r") as file:
+    with open("wiaudit/apikey.txt", "r") as file: # edited
         api_key = file.read().strip()
 except FileNotFoundError:
     print("API key file not found. Please ensure apikey.txt is in the same directory.")
@@ -45,6 +46,7 @@ if api_key == "YOUR_API_KEY":
 
 # Check for -t flag
 output_to_terminal = "-t" in sys.argv
+
 
 # Check if an input file or wallet address is provided
 if len(sys.argv) < 2:
@@ -148,9 +150,17 @@ if not output_to_terminal:
                 print(f"Processing batch {batch_num + 1} of {total_batches}")
                 print(f"Wallets {start_index + 1} to {end_index}")
 
-                # Make batch API request
+                # # Make batch API request
+                # response = requests.post(
+                #     "https://wi.thirdwavelabs.com/evm/wallets/batch",
+                #     headers={"X-Api-Key": api_key, "Content-Type": "application/json"},
+                #     json=batch_addresses
+                # )
+                # status_code = response.status_code
+
+                # EDITED FROM ABOVE
                 response = requests.post(
-                    "https://wi.thirdwavelabs.com/evm/wallets/batch",
+                    "https://api.thirdwavelabs.com/wallets/batch",
                     headers={"X-Api-Key": api_key, "Content-Type": "application/json"},
                     json=batch_addresses
                 )
@@ -217,9 +227,15 @@ if not output_to_terminal:
             processed_count = 0
 
             for address in wallet_addresses:
-                # Make API request for each wallet address
-                response = requests.get(f"https://wi.thirdwavelabs.com/evm/wallets/{address}", headers={"X-Api-Key": api_key})
+                # # Make API request for each wallet address
+                # response = requests.get(f"https://wi.thirdwavelabs.com/evm/wallets/{address}", headers={"X-Api-Key": api_key})
+                # status_code = response.status_code
+
+                # EDITED FROM ABOVE
+                response = requests.get(f"https://api.thirdwavelabs.com/evm/wallets/{address}",
+                                        headers={"X-Api-Key": api_key})
                 status_code = response.status_code
+
 
                 processed_count += 1
                 remaining_count = total_addresses - processed_count
@@ -296,13 +312,22 @@ else:
             print(f"Processing batch {batch_num + 1} of {total_batches}")
             print(f"Wallets {start_index + 1} to {end_index}")
 
-            # Make batch API request
+            # # Make batch API request
+            # response = requests.post(
+            #     "https://wi.thirdwave.com/evm/wallets/batch",
+            #     headers={"X-Api-Key": api_key, "Content-Type": "application/json"},
+            #     json=batch_addresses
+            # )
+            # status_code = response.status_code
+
+            # EDITED FROM ABOVE
             response = requests.post(
-                "https://wi.thirdwave.com/evm/wallets/batch",
+                "https://api.thirdwavelabs.com/wallets/batch",
                 headers={"X-Api-Key": api_key, "Content-Type": "application/json"},
                 json=batch_addresses
             )
             status_code = response.status_code
+
 
             if status_code == 200:
                 response_body = response.json()
@@ -321,15 +346,23 @@ else:
         processed_count = 0
 
         for address in wallet_addresses:
-            # Make API request for each wallet address
-            response = requests.get(f"https://wi.thirdwavelabs.com/evm/wallets/{address}", headers={"X-Api-Key": api_key})
+            # # Make API request for each wallet address
+            # response = requests.get(f"https://wi.thirdwavelabs.com/evm/wallets/{address}", headers={"X-Api-Key": api_key})
+            # status_code = response.status_code
+
+            # EDITED FROM ABOVE
+            response = requests.get(f"https://api.thirdwavelabs.com/evm/wallets/{address}",
+                                    headers={"X-Api-Key": api_key})
             status_code = response.status_code
+            
+
 
             processed_count += 1
             remaining_count = total_addresses - processed_count
 
             print(f"Wallets {remaining_count}:{processed_count}")
             print(f"{status_code} {address} {response.text}\n")
+
 
 if not output_to_terminal:
     # Record the finish time

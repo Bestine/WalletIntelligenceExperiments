@@ -226,3 +226,5 @@ if __name__ == "__main__":
     # Format as markdown 
     markdown_report = format_markdown_report(read_report)
     print(markdown_report)
+
+    # Tomorrow we create README and custom reports from the real users 
