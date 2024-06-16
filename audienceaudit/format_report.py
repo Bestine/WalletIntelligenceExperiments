@@ -1,4 +1,8 @@
-from datetime import datetime  
+from datetime import datetime 
+
+# added
+import os
+import sys
 
 """
 def format_markdown_report(output):
@@ -219,12 +223,23 @@ if __name__ == "__main__":
 
     # print(read_report)
 
+    # HTML REPORT PROCESSING
+    # Direct the output to a html file
+    current_dir = os.getcwd()
+    output_filepath = current_dir + "/audienceaudit/report_output.html"
+    sys.stdout = open(output_filepath, "w")
     # Now format as html 
     html_report = format_html_report(read_report)
-    # print(html_report)
+    print(html_report)
 
+    # MARKDOWN REPORT PROCESSING
+    # Direct the output to a Markdown file
+    current_dir = os.getcwd()
+    output_filepath = current_dir + "/audienceaudit/report_output.md"
+    sys.stdout = open(output_filepath, "w")
     # Format as markdown 
     markdown_report = format_markdown_report(read_report)
     print(markdown_report)
+    
 
     # Tomorrow we create README and custom reports from the real users 

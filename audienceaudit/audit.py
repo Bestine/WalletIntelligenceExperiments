@@ -341,7 +341,8 @@ if __name__ == "__main__":
 
 
     # Testing the main function and directing it to an output file
-    main("audienceaudit/ExampleReport.csv")
+    # main("audienceaudit/ExampleReport.csv")
+    main("reports/2024-06-15-21-40.csv")
 
 
 
