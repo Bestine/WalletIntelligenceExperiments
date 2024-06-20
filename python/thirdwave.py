@@ -5,11 +5,11 @@ Last updated 2024.06.19
 For any questions, please contact us at matt@thirdwavelabs.com
 
 OVERVIEW
-This script can processes a single wallet or list of wallets as text files, CSVs, and JSON arrays as inputs. 
+This script can process a single wallet or list of wallets as text files, CSVs, and JSON arrays as inputs. 
 The output will be a CSV report that includes all current Wallet Intelligence fields. 
 
 REQUIREMENTS
-This script using the Python requests library. You can install it using pip: pip install requests 
+This script uses the Python requests library. You can install it using pip: pip install requests 
 
 USAGE
 python3 thirdwave.py 0x606137dBaBaE484101C66e6De7d15Eb6D8161b19
@@ -121,10 +121,9 @@ batch_size = 5000
 
 # Process each wallet address or batch of addresses
 if not output_to_terminal:
-    # output_file = f"reports/{start_time.strftime('%Y-%m-%d-%H-%M')}.csv"
     # Write unique wallets to a text file with the same name as the input file
     output_file = input_file.rsplit(".", 1)[0] + "_widata.csv"
-    
+
     with open(output_file, "w", newline="") as file:
         csv_writer = csv.writer(file)
         csv_writer.writerow([
@@ -143,7 +142,7 @@ if not output_to_terminal:
             "Continuous Engagement",
             "Funding Network"
         ])
-
+        #
         if use_batch_endpoint:
             total_batches = (len(wallet_addresses) + batch_size - 1) // batch_size
             for batch_num in range(total_batches):
@@ -165,8 +164,8 @@ if not output_to_terminal:
                 if status_code == 200:
                     try:
                         response_body = response.json()
-                        for wallet_data in response_body.get("data", []):
-                            if isinstance(wallet_data, dict):
+                        for i, wallet_data in enumerate(response_body.get("data", [])):
+                            if wallet_data is not None and isinstance(wallet_data, dict):
                                 csv_writer.writerow([
                                     wallet_data.get("address", "unknown"),
                                     status_code,
@@ -182,6 +181,23 @@ if not output_to_terminal:
                                     wallet_data.get("botBehaviors", {}).get("transactionVelocity", False),
                                     wallet_data.get("botBehaviors", {}).get("continuousEngagement", False),
                                     wallet_data.get("botBehaviors", {}).get("fundingNetwork", False)
+                                ])
+                            else:
+                                csv_writer.writerow([
+                                    batch_addresses[i],
+                                    "404",
+                                    "Wallet Not Found",
+                                    "0",
+                                    "0",
+                                    "0",
+                                    "0",
+                                    "null",
+                                    "50",
+                                    "False",
+                                    "False",
+                                    "False",
+                                    "False",
+                                    "False"
                                 ])
                     except (json.JSONDecodeError, KeyError):
                         for address in batch_addresses:
@@ -220,6 +236,8 @@ if not output_to_terminal:
                             "unknown",
                             "unknown"
                         ])
+                        
+
         else:
             total_addresses = len(wallet_addresses)
             processed_count = 0
@@ -237,49 +255,47 @@ if not output_to_terminal:
 
                 try:
                     response_body = response.json()
+                    if status_code == 200:
+                        csv_writer.writerow([
+                            address,
+                            status_code,
+                            "Success",
+                            response_body.get("totalBalance", "unknown"),
+                            response_body.get("transactionCount", "unknown"),
+                            response_body.get("spend", "unknown"),
+                            response_body.get("spendGames", "unknown"),
+                            response_body.get("createdAt", "unknown"),
+                            response_body.get("hodlerScore", "unknown"),
+                            response_body.get("isBot", False),
+                            response_body.get("botBehaviors", {}).get("temporalActivity", False),
+                            response_body.get("botBehaviors", {}).get("transactionVelocity", False),
+                            response_body.get("botBehaviors", {}).get("continuousEngagement", False),
+                            response_body.get("botBehaviors", {}).get("fundingNetwork", False)
+                        ])
+                    else:
+                        error_message = response_body.get("error", {}).get("message", "")
+                        csv_writer.writerow([
+                            address,
+                            status_code,
+                            f"Error: {error_message}",
+                            "unknown",
+                            "unknown",
+                            "unknown",
+                            "unknown",
+                            "unknown",
+                            "unknown",
+                            "unknown",
+                            "unknown",
+                            "unknown",
+                            "unknown",
+                            "unknown"
+                        ])
                 except requests.exceptions.JSONDecodeError as e:
                     print(f"Wallet Not Found at {address}. Please check for any formatting issues or unexpected characters.")
                     csv_writer.writerow([
                         address,
                         status_code,
                         "Wallet Not Found",
-                        "unknown",
-                        "unknown",
-                        "unknown",
-                        "unknown",
-                        "unknown",
-                        "unknown",
-                        "unknown",
-                        "unknown",
-                        "unknown",
-                        "unknown",
-                        "unknown"
-                    ])
-                    continue
-
-                if status_code == 200:
-                    csv_writer.writerow([
-                        address,
-                        status_code,
-                        "Success",
-                        response_body.get("totalBalance", "unknown"),
-                        response_body.get("transactionCount", "unknown"),
-                        response_body.get("spend", "unknown"),
-                        response_body.get("spendGames", "unknown"),
-                        response_body.get("createdAt", "unknown"),
-                        response_body.get("hodlerScore", "unknown"),
-                        response_body.get("isBot", False),
-                        response_body.get("botBehaviors", {}).get("temporalActivity", False),
-                        response_body.get("botBehaviors", {}).get("transactionVelocity", False),
-                        response_body.get("botBehaviors", {}).get("continuousEngagement", False),
-                        response_body.get("botBehaviors", {}).get("fundingNetwork", False)
-                    ])
-                else:
-                    error_message = response_body.get("error", {}).get("message", "")
-                    csv_writer.writerow([
-                        address,
-                        status_code,
-                        f"Error: {error_message}",
                         "unknown",
                         "unknown",
                         "unknown",
