@@ -12,7 +12,7 @@ Please complete the following prior to downloading the tutorial:
 Navigate to desired folder and run the following command to download tutorial files. 
 
 ```
-git clone https://github.com/mattlor/WalletIntelligenceTutorial/python.git
+git clone https://github.com/mattlor/WalletIntelligenceExperiments/ 
 ```
 
 ## INSTALL API KEY
