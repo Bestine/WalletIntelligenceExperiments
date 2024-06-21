@@ -247,32 +247,11 @@ def main(csv_file, output_format=None, summary_only=False):
     print(f"Total Wallets Submitted: {total_wallets}")
     print(f"Unique Wallets Analyzed: {unique_wallets} (Duplicates Removed: {duplicate_occurrences})")
     print()
-    print(f"Outbound Wallets : {outbound_wallets} ({outbound_wallets / unique_wallets * 100:.2f}%)")
-    print(f"Deposit Wallets  : {deposit_wallets} ({deposit_wallets / unique_wallets * 100:.2f}%)")
-    print(f"Fresh Wallets    : {fresh_wallets} ({fresh_wallets / unique_wallets * 100:.2f}%)")    
-    print(f"Bot Wallets      : {bot_wallets} ({bot_wallets / unique_wallets * 100:.2f}%)")
+    print(f"Outbound Wallets     : {outbound_wallets} ({outbound_wallets / unique_wallets * 100:.2f}%)")
+    print(f"Deposit Wallets      : {deposit_wallets} ({deposit_wallets / unique_wallets * 100:.2f}%)")
+    print(f"Zero History Wallets : {fresh_wallets} ({fresh_wallets / unique_wallets * 100:.2f}%)")    
+    print(f"Bot Wallets          : {bot_wallets} ({bot_wallets / unique_wallets * 100:.2f}%)")
     print()
-
-    """
-    Not a Wallet: This does not appear to be a wallet based on the string format / what we can see on the chains we support.
-    → Valid format  = false (you get a nulll response)
-
-    Fresh Wallet: This appears to be a correctly formatted wallet ID but we do not observe any tx deposit or outbound (on the chains we support).
-    → Valid format = true (no null response); transactionCount = 0, createdAt timestamp = null
-
-    Deposit Wallet: The wallet has been used for deposits but does not have any outbound transactions.
-    → Valid format = true; transactionCount = 0, createdAt timestamp = exists
-
-    Outbound  Wallet: The wallet has executed at least one outbound transaction.
-    → Valid format = true; transactionCount tx > 0
-
-"""
-
-
-    # Check Totals 
-    # total_check = normal_wallets + fresh_wallets + bot_wallets
-    # print(f"MECE Total Unique Wallets Check: {total_check}")
-
 
     if summary_only:
         return

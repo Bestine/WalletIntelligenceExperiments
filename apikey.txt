@@ -1,0 +1,4 @@
+YOUR_API_KEY
+
+Instructions: Replace the first line in this file with your API key. 
+Go to https://docs.thirdwavelabs.com to get started. 

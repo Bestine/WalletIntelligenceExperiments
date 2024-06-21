@@ -1,27 +1,3 @@
-"""
-THIRDWAVE WALLET INTELLIGENCE // Python Example
-Version v1
-Last updated 2024.06.19
-For any questions, please contact us at matt@thirdwavelabs.com
-
-OVERVIEW
-This script can process a single wallet or list of wallets as text files, CSVs, and JSON arrays as inputs. 
-The output will be a CSV report that includes all current Wallet Intelligence fields. 
-
-REQUIREMENTS
-This script uses the Python requests library. You can install it using pip: pip install requests 
-
-USAGE
-python3 thirdwave.py 0x606137dBaBaE484101C66e6De7d15Eb6D8161b19
-python3 thirdwave.py <source file>.txt
-python3 thirdwave.py <source file>.json
-python3 thirdwave.py <source file>.csv
-
-FLAGS
--t : Output to terminal only
-
-"""
-
 import sys
 import re
 import json
@@ -31,13 +7,23 @@ import requests
 from datetime import datetime
 import os
 
+def check_balance(balance):
+    try:
+        balance_float = float(balance)
+        if balance_float > 10_000_000_000:
+            return "conversion error"
+        return balance
+    except ValueError:
+        return balance  # Return original value if it can't be converted to float
+
+
 # Record the start time
 start_time = datetime.now()
 
 # Check for API key
 try:
     with open("apikey.txt", "r") as file:
-        api_key = file.read().strip()
+        api_key = file.readline().strip()
 except FileNotFoundError:
     print("API key file not found. Please ensure apikey.txt is in the same directory.")
     sys.exit(1)
@@ -111,7 +97,7 @@ else:
 
 if not output_to_terminal:
     # Create the reports directory if it doesn't exist
-    os.makedirs("reports", exist_ok=True)
+    # os.makedirs("reports", exist_ok=True)
 
     # Record the start time
     start_time = datetime.now()
@@ -170,10 +156,10 @@ if not output_to_terminal:
                                     wallet_data.get("address", "unknown"),
                                     status_code,
                                     "Success",
-                                    wallet_data.get("totalBalance", "unknown"),
+                                    check_balance(wallet_data.get("totalBalance", "unknown")),
                                     wallet_data.get("transactionCount", "unknown"),
-                                    wallet_data.get("spend", "unknown"),
-                                    wallet_data.get("spendGames", "unknown"),
+                                    check_balance(wallet_data.get("spend", "unknown")),
+                                    check_balance(wallet_data.get("spendGames", "unknown")),
                                     wallet_data.get("createdAt", "unknown"),
                                     wallet_data.get("hodlerScore", "unknown"),
                                     wallet_data.get("isBot", False),
@@ -260,10 +246,10 @@ if not output_to_terminal:
                             address,
                             status_code,
                             "Success",
-                            response_body.get("totalBalance", "unknown"),
+                            check_balance(response_body.get("totalBalance", "unknown")),
                             response_body.get("transactionCount", "unknown"),
-                            response_body.get("spend", "unknown"),
-                            response_body.get("spendGames", "unknown"),
+                            check_balance(response_body.get("spend", "unknown")),
+                            check_balance(response_body.get("spendGames", "unknown")),
                             response_body.get("createdAt", "unknown"),
                             response_body.get("hodlerScore", "unknown"),
                             response_body.get("isBot", False),
@@ -333,6 +319,9 @@ else:
                     response_body = response.json()
                     for i, wallet_data in enumerate(response_body):
                         if isinstance(wallet_data, dict):
+                            wallet_data['totalBalance'] = check_balance(wallet_data.get('totalBalance', 'unknown'))
+                            wallet_data['spend'] = check_balance(wallet_data.get('spend', 'unknown'))
+                            wallet_data['spendGames'] = check_balance(wallet_data.get('spendGames', 'unknown'))
                             print(f"{status_code} {wallet_data.get('address', 'unknown')} {json.dumps(wallet_data)}\n")
                         else:
                             print(f"null {batch_addresses[i]} Missing Data\n")
@@ -356,7 +345,17 @@ else:
             remaining_count = total_addresses - processed_count
 
             print(f"Wallets {remaining_count}:{processed_count}")
-            print(f"{status_code} {address} {response.text}\n")
+            if status_code == 200:
+                try:
+                    response_body = response.json()
+                    response_body['totalBalance'] = check_balance(response_body.get('totalBalance', 'unknown'))
+                    response_body['spend'] = check_balance(response_body.get('spend', 'unknown'))
+                    response_body['spendGames'] = check_balance(response_body.get('spendGames', 'unknown'))
+                    print(f"{status_code} {address} {json.dumps(response_body)}\n")
+                except json.JSONDecodeError:
+                    print(f"{status_code} {address} Error: Invalid JSON response\n")
+            else:
+                print(f"{status_code} {address} {response.text}\n")
 
 if not output_to_terminal:
     # Record the finish time
