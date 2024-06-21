@@ -34,10 +34,12 @@ The output will be a CSV report that includes all current Wallet Intelligence fi
 This script using the Python requests library. You can install it using pip: `pip install requests`
 
 ## USAGE
-`python3 thirdwave.py 0x606137dBaBaE484101C66e6De7d15Eb6D8161b19`
-`python3 thirdwave.py <source file>.txt`
-`python3 thirdwave.py <source file>.json`
-`python3 thirdwave.py <source file>.csv`
+```
+python3 thirdwave.py 0x606137dBaBaE484101C66e6De7d15Eb6D8161b19
+python3 thirdwave.py <source file>.txt
+python3 thirdwave.py <source file>.json
+python3 thirdwave.py <source file>.csv
+```
 
 ## FLAGS
 -t : Output to terminal only
