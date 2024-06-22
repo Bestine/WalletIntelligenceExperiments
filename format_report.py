@@ -203,7 +203,7 @@ def generate_report(csv_file, output, output_format):
         raise ValueError("Invalid output format specified.")
 
     # Generate the output file name
-    output_file = f"Audit-{csv_file.split('/')[-1][:-4]}.{file_extension}"
+    output_file = f"{csv_file.split('/')[-1][:-4]}_summary.{file_extension}"
 
     # Write the formatted output to the file
     with open(output_file, "w") as file:

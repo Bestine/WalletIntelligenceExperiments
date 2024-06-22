@@ -103,7 +103,7 @@ if not output_to_terminal:
     start_time = datetime.now()
 
 # Set the batch size
-batch_size = 5000
+batch_size = 1000
 
 # Process each wallet address or batch of addresses
 if not output_to_terminal:
