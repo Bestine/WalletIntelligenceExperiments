@@ -1,0 +1,136 @@
+<html><head><title>Thirdwave Wallet Intelligence Audit Report</title><style>
+    body {
+        font-family: 'Arial', sans-serif;
+        color: white;
+        background-color: #000e55; /* Dark blue background */
+    }
+    h1 {
+        font-size: 30px;
+        color: white; /* White for main report heading */
+    }
+    h2 {
+        font-size: 24px;
+        color: #81FF9C; /* green for section headings */
+    }   
+    h3 {
+        font-size: 18px;
+        color: #9E7EFF; /* pink for subheadings */
+        }
+    table {
+        font-family:monospace;
+        /*width: 50%;*/
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    th, td {
+        border: 1px solid #45A29E; /* Lighter cyan border for table */
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #000e55; /* Dark blue header background */
+    }
+    p {
+        font-size: 14px;
+    }
+    </style></head><body><h1>Thirdwave Wallet Intelligence Audit Report</h1><p></p>
+<h2>Summary of Analysis</h2>
+<table>
+<tr><td>Total Wallets Submitted</td><td>1000</td></tr>
+<tr><td>Unique Wallets Analyzed</td><td>1000 (Duplicates Removed: 0)</td></tr>
+</table>
+<p></p>
+<table>
+<tr><td>Outbound Wallets</td><td>959 (95.90%)</td></tr>
+<tr><td>Deposit Wallets</td><td>12 (1.20%)</td></tr>
+<tr><td>Zero History Wallets</td><td>5 (0.50%)</td></tr>
+<tr><td>Bot Wallets</td><td>24 (2.40%)</td></tr>
+</table>
+<h2>Wallet Metrics</h2>
+<table>
+<tr><td>Metric</td><td>Median</td><td>Average</td><td>Min</td><td>Max</td></tr>
+<tr><td>Spend per Wallet</td><td>$54</td><td>$2,770</td><td>$0</td><td>$1,032,650</td></tr>
+<tr><td>Balance per Wallet</td><td>$6</td><td>$32</td><td>$0</td><td>$11,914</td></tr>
+<tr><td>Transaction Count per Wallet</td><td>144</td><td>227</td><td>0</td><td>7819</td></tr>
+<tr><td>Spend Games per Wallet</td><td>$0</td><td>$42</td><td>$0</td><td>$21,982</td></tr>
+<tr><td>Transaction Value</td><td>$12</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>
+<tr><td>Wallet Age (days)</td><td>546</td><td>512</td><td>60</td><td>2363</td></tr>
+</table>
+<h2>Bot Report</h2>
+<h3>IsBot: False</h3>
+<table>
+<tr><td>Median Spend</td><td>$54 (Count: 976)</td></tr>
+<tr><td>Median Transaction Count</td><td>143 (Count: 976)</td></tr>
+</table>
+<p></p>
+<h3>IsBot: True</h3>
+<table>
+<tr><td>Median Spend</td><td>$520 (Count: 24)</td></tr>
+<tr><td>Median Transaction Count</td><td>322 (Count: 24)</td></tr>
+</table>
+<p></p>
+<h3>Bot Behaviors</h3>
+<table>
+<tr><td>Temporal Activity</td><td>2 (8.33%)</td></tr>
+<tr><td>Transaction Velocity</td><td>0 (0.00%)</td></tr>
+<tr><td>Continuous Engagement</td><td>7 (29.17%)</td></tr>
+<tr><td>Funding Network</td><td>18 (75.00%)</td></tr>
+</table>
+<h2>Anomaly Detection</h2>
+<h3>Anomalies in Spend</h3>
+<table>
+<tr><td>Wallet Address</td><td>Spend</td></tr>
+<tr><td>0xb2be9ab5fa90b084057943192a49c1647fe4b35a</td><td>$1,032,650</td></tr>
+<tr><td>0x119f37db41c88095f3a52572222c74499b7c7972</td><td>$528,636</td></tr>
+<tr><td>0xf2881caed705571bc7eaad6ca8e126d88f17a237</td><td>$164,963</td></tr>
+</table>
+<p></p>
+<h3>Anomalies in Total Balance</h3>
+<table>
+<tr><td>Wallet Address</td><td>Total Balance</td></tr>
+<tr><td>0xc460d68c36beb93460c1651f77cf2372b19766e9</td><td>$11,914</td></tr>
+<tr><td>0xf2881caed705571bc7eaad6ca8e126d88f17a237</td><td>$2,149</td></tr>
+</table>
+<h2>Top 10 Transaction Count, Non-Bots</h2>
+<table>
+<tr><td>Wallet Address</td><td>Transaction Count</td></tr>
+<tr><td>0x8d5bb5aa462cd3a200c0010b66fde3b3c87cfca5</td><td>7819</td></tr>
+<tr><td>0x4168abe9065c3cc4415b1bceedc041cc12743724</td><td>7282</td></tr>
+<tr><td>0xef41421593f0211154665670ffb925c63243c3c6</td><td>6728</td></tr>
+<tr><td>0xbd680338b781ccbdaafdf25e902f54b4a4974600</td><td>5701</td></tr>
+<tr><td>0xc1545b0f9bd5882824aabe72bd322bd46c492f7e</td><td>5048</td></tr>
+<tr><td>0xb429dace2e76a7542aa1f4d8ffbdc27e693c5b3c</td><td>3352</td></tr>
+<tr><td>0xb4f0c739fa3c9fcb577b7002d8c292f2078fb14f</td><td>3062</td></tr>
+<tr><td>0x5a8bf7fdc5be87012203233845dfe208e337529d</td><td>3038</td></tr>
+<tr><td>0x1fa406da31eea33752481c526a249c06279fd9a5</td><td>2667</td></tr>
+<tr><td>0x988527874c7e3f02115f89a6a97135c70b6a47fc</td><td>2640</td></tr>
+</table>
+<h2>Oldest Wallets</h2>
+<table>
+<tr><td>Wallet Address</td><td>Created At</td><td>Days Old</td></tr>
+<tr><td>0xad2dea1a2e4b068b33e1eb3850288a4c44c13d30</td><td>2017-12-31 23:25:48</td><td>2363</td></tr>
+<tr><td>0xb4f0c739fa3c9fcb577b7002d8c292f2078fb14f</td><td>2019-08-08 21:28:49</td><td>1778</td></tr>
+<tr><td>0xefba6008c20dbc538081fdbc42b0d0c7e072d6f2</td><td>2019-08-22 20:15:10</td><td>1764</td></tr>
+<tr><td>0xf900d6ecfb5702ce3e9e698d9a355223b15990a1</td><td>2019-10-11 12:56:28</td><td>1715</td></tr>
+<tr><td>0xcea51cfee389c2c6bd7d6cfa47921932931230c9</td><td>2020-02-15 03:51:01</td><td>1588</td></tr>
+<tr><td>0x6f3e91a50b8c381fd3de973da7d7adf70c5d748a</td><td>2020-07-26 22:32:37</td><td>1425</td></tr>
+<tr><td>0xca435d48fe79dcabf5e0ffe37d80bae1393d201b</td><td>2020-09-28 23:25:40</td><td>1361</td></tr>
+<tr><td>0x6eb0f29b8fc7a29e517ba56dd79287b3ccac64f3</td><td>2020-09-30 20:47:14</td><td>1359</td></tr>
+<tr><td>0xc460d68c36beb93460c1651f77cf2372b19766e9</td><td>2020-10-07 08:42:20</td><td>1353</td></tr>
+<tr><td>0x7ecdd06fd90ea3a81e6250f001e8ac459210246e</td><td>2020-10-21 13:49:34</td><td>1339</td></tr>
+</table>
+<h2>Daily Transactions Leaderboard (Non-Bots, >10 Days Old)</h2>
+<table>
+<tr><td>Wallet Address</td><td>Daily Transactions</td><td>Days Old</td></tr>
+<tr><td>0xef41421593f0211154665670ffb925c63243c3c6</td><td>8.91</td><td>755</td></tr>
+<tr><td>0xbd680338b781ccbdaafdf25e902f54b4a4974600</td><td>8.77</td><td>650</td></tr>
+<tr><td>0x8d5bb5aa462cd3a200c0010b66fde3b3c87cfca5</td><td>8.30</td><td>942</td></tr>
+<tr><td>0x4168abe9065c3cc4415b1bceedc041cc12743724</td><td>6.54</td><td>1113</td></tr>
+<tr><td>0xb429dace2e76a7542aa1f4d8ffbdc27e693c5b3c</td><td>5.33</td><td>629</td></tr>
+<tr><td>0xc1545b0f9bd5882824aabe72bd322bd46c492f7e</td><td>4.53</td><td>1114</td></tr>
+<tr><td>0x5a8bf7fdc5be87012203233845dfe208e337529d</td><td>4.06</td><td>748</td></tr>
+<tr><td>0x0357543c6ffde1cc28e13dbe8b6d3e8a3b372cb1</td><td>3.03</td><td>496</td></tr>
+<tr><td>0x6c4d39f9e53e4edcc4593defdc811fdf8bc52c30</td><td>2.62</td><td>601</td></tr>
+<tr><td>0x988527874c7e3f02115f89a6a97135c70b6a47fc</td><td>2.61</td><td>1011</td></tr>
+</table>
+<p>Report generated at 2024-06-21 17:13:32</p></body></html>

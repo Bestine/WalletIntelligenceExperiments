@@ -1,5 +1,5 @@
-# Wallet Intelligence Audience Audit
-# Run the audit on any Wallet Intelligence Report using `python3 audit.py wallet_intelligence.csv`
+# Wallet Intelligence Audience Summary
+# Run the summary script on any Wallet Intelligence Report using `python3 summary.py wallet_intelligence.csv`
 # Use -html to generate an HTML report
 # Version 1.0 
 # Updated on 2024.06.19

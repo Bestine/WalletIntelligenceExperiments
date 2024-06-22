@@ -8,10 +8,6 @@ def format_markdown_report(output):
 def format_txt_report(output):
     # Format the output as plain text
     # ...
-
-def format_csv_report(output):
-    # Format the output as CSV
-    # ...
 """
 
 def get_css():
@@ -179,6 +175,29 @@ def format_markdown_report(output):
 
     return formatted_output.strip()
 
+# New function to format CSV report
+def format_csv_report(output):
+    formatted_output = ""
+    lines = output.strip().split("\n")
+    
+    for line in lines:
+        if line.startswith("> ") or line.startswith("---"):
+            # Skip section headers
+            continue
+        elif "|" in line:
+            # Convert table rows to CSV
+            cells = line.strip().split("|")
+            formatted_output += ",".join(cell.strip() for cell in cells if cell.strip()) + "\n"
+        elif ": " in line:
+            # Convert attribute lines to CSV
+            attribute, value = line.split(": ", 1)
+            formatted_output += f"{attribute.strip()},{value.strip()}\n"
+        elif line.strip() and not all(c == "=" for c in line.strip()):
+            # Include non-empty lines that are not separators
+            formatted_output += line.strip() + "\n"
+    
+    return formatted_output
+
 def generate_report(csv_file, output, output_format):
     if output_format == "html":
         file_extension = "html"
@@ -202,12 +221,11 @@ def generate_report(csv_file, output, output_format):
     else:
         raise ValueError("Invalid output format specified.")
 
-    # Generate the output file name
-    output_file = f"{csv_file.split('/')[-1][:-4]}_summary.{file_extension}"
+    # Generate the output file name in the same directory as the input file
+    output_file = csv_file.rsplit(".", 1)[0] + f"_summary.{file_extension}"
 
     # Write the formatted output to the file
     with open(output_file, "w") as file:
         file.write(formatted_output)
 
     print(f"\nReport generated: {output_file}")
-
