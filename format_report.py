@@ -229,3 +229,27 @@ def generate_report(csv_file, output, output_format):
         file.write(formatted_output)
 
     print(f"\nReport generated: {output_file}")
+
+# Lets test the functions 
+if __name__ == "__main__":
+    import os
+    import sys 
+
+    with open('reports/report_output.txt', 'r') as f:
+        report_output = f.read()
+
+    # Generate html report and Direct the output to a html file
+    current_dir = os.getcwd()
+    output_filepath = current_dir + "/reports/report_output.html"
+    sys.stdout = open(output_filepath, "w")
+
+    html_report = format_html_report(report_output) # generate html report
+    # print(html_report)
+
+    # Generate a markdown report
+    output_filepath = current_dir + "/reports/report_output.md"
+    sys.stdout = open(output_filepath, "w")
+
+    markdown_report = format_markdown_report(report_output) # generate html report
+    print(markdown_report)
+    
