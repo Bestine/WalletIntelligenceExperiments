@@ -18,6 +18,8 @@ The output will display:
 - Count of invalid entries, along with a list of those invalid entries.
 """
 
+real_wallet = "0xce8a4492bfa6f529041fc0c0a407f479de443aa507a3b870ee1d617c595505e4"
+
 import sys
 import re
 
@@ -60,3 +62,9 @@ if len(invalid_entries) > 0:
     print("\nInvalid Entries:")
     for entry in invalid_entries:
         print(entry)
+        
+# Lets test the functions 
+if __name__ == "__main__":
+    # is_valid_wallet?
+    # check if wallet is valid 
+    is_valid_wallet("0x9BA9e1B15B8B88d2D184FC89bda4f31Fb1a12757")
