@@ -25,6 +25,18 @@ plot_1 = px.pie(bot_shield_df,
                  values='count', names='Is Bot',
                  title="Bot Shield - Composition of Bots and Non-bots")
 
+# Plot 2 - TOKEN GATING 
+## Chart ideas
+    # - Distribution of total Balance - row 1
+    # - Wallets with top balances(top 10) - row 2
+    # - Wallets with least balances(bottom 5) - row 2
+
+## Distribution of Total Balance
+plot_2a = px.histogram(df, x="Total Balance", nbins=5,
+                       title="Distribution of Total Balance")
+plot_2b = px.box(df, y="Total Balance",
+                 title="Distribution of Total Balance")
+
 
 # # Plot_2 - Histogram of total balance
 # plot_2 = df["Total Balance"].hvplot.hist()
@@ -41,7 +53,11 @@ plot_1 = px.pie(bot_shield_df,
 # Create the dashboard outlook 
 template = pn.template.FastListTemplate(
     title="WALLET QUICK ANALYSIS",
-    main = [plot_1,],
+    main = [
+        plot_1,
+        plot_2a,
+        plot_2b,
+        ],
     accent_base_color="#88d8b0",
     header_background="#88d8b0",
 )
