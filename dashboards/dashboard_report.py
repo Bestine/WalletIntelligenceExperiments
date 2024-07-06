@@ -23,7 +23,7 @@ bot_shield_df = df["Is Bot"].value_counts().reset_index()
 
 plot_1 = px.pie(bot_shield_df, 
                  values='count', names='Is Bot',
-                 title="Bot Shield - Composition of Bots and Non-bots")
+                 title="BOT SHIELD - Composition of Bots and Non-bots")
 
 # Plot 2 - TOKEN GATING 
 ## Chart ideas
@@ -33,10 +33,51 @@ plot_1 = px.pie(bot_shield_df,
 
 ## Distribution of Total Balance
 plot_2a = px.histogram(df, x="Total Balance", nbins=5,
-                       title="Distribution of Total Balance")
+                       title="TOKEN GATING - Distribution of Total Balance")
 plot_2b = px.box(df, y="Total Balance",
-                 title="Distribution of Total Balance")
+                 title="TOKEN GATING - Distribution of Total Balance")
 
+## Top Balances in a bar chart
+top_balances_df = df[["Wallet Address", "Is Bot", "Total Balance"]]\
+    .sort_values(by="Total Balance", ascending=False)[:10].reset_index(drop=True)
+
+plot_2c = px.bar(top_balances_df, 
+                 x="Total Balance", y="Wallet Address", 
+                 color="Is Bot", orientation='h',
+                 title="TOKEN GATING - Top 10 Balances")
+
+## Low Balances in a bar chart
+low_balances_df = df[["Wallet Address", "Is Bot", "Total Balance"]]\
+    .sort_values(by="Total Balance", ascending=True)[:50].reset_index(drop=True)
+
+plot_2d = px.bar(low_balances_df, 
+                 x="Total Balance", y="Wallet Address", 
+                 color="Is Bot", orientation='h',
+                 title="TOKEN GATING - Bottom 50 Balances")
+
+# Plot 3 - Is about personalization
+## The effect of Hodling against the total balance - scatter chart
+plot_3a = px.scatter(df,
+                    x="Hodler Score", y="Total Balance",
+                    color="Is Bot")
+
+## Regenerate the box plot by removing the outliers
+def calculate_fences(df, category):
+    category_data = df[category]
+    Q1 = np.percentile(category_data, 25)
+    Q3 = np.percentile(category_data, 75)
+    IQR = Q3 - Q1
+    lower_fence = Q1 - (1.5 * IQR)
+    upper_fence = Q3 + (1.5 * IQR)
+    return lower_fence, upper_fence
+
+lower_fence, upper_fence = calculate_fences(df, "Total Balance")
+clean_df = df[(df["Total Balance"]>=lower_fence)&(df["Total Balance"]<=upper_fence)]
+
+# Replot the plot_3a
+plot_3b = px.scatter(clean_df,
+                    x="Hodler Score", y="Total Balance",
+                    color="Is Bot", trendline="ols")
 
 # # Plot_2 - Histogram of total balance
 # plot_2 = df["Total Balance"].hvplot.hist()
@@ -54,9 +95,10 @@ plot_2b = px.box(df, y="Total Balance",
 template = pn.template.FastListTemplate(
     title="WALLET QUICK ANALYSIS",
     main = [
-        plot_1,
-        plot_2a,
-        plot_2b,
+        plot_1, 
+        pn.Row(plot_2a, plot_2b),
+        pn.Row(plot_2c, plot_2d),
+        pn.Row(plot_3a, plot_3b)
         ],
     accent_base_color="#88d8b0",
     header_background="#88d8b0",
