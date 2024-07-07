@@ -23,7 +23,7 @@ bot_shield_df = df["Is Bot"].value_counts().reset_index()
 
 plot_1 = px.pie(bot_shield_df, 
                  values='count', names='Is Bot',
-                 title="BOT SHIELD - Composition of Bots and Non-bots")
+                 title="BOT AUDIT - Composition of Bots and Non-bots")
 
 # Plot 2 - TOKEN GATING 
 ## Chart ideas
