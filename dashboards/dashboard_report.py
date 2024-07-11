@@ -23,7 +23,9 @@ bot_shield_df = df["Is Bot"].value_counts().reset_index()
 
 plot_1 = px.pie(bot_shield_df, 
                  values='count', names='Is Bot',
-                 title="BOT AUDIT - Composition of Bots and Non-bots")
+                 title="Composition of Bots and Non-bots",
+                 width=300, height=300,
+                 hole=0.5)
 
 # Plot 2 - TOKEN GATING 
 ## Chart ideas
@@ -92,12 +94,37 @@ plot_3b = px.scatter(clean_df,
 # PASS
 
 # SIDE BAR WIDGETS
+## Add a short title
+short_title = pn.pane.Markdown("# Lorem Ipsum")
+## Add a short guide
+short_explanation = pn.pane.Markdown("""
+The standard chunk of Lorem Ipsum used since the 1500s is reproduced 
+below for those interested. Sections 1.10.32 and 1.10.33 from "de 
+Finibus Bonorum et Malorum" by Cicero are also reproduced in their 
+exact original form, accompanied by English versions from the 1914 
+translation by H. Rackham.
+""")
+## Allow the user to choose a file 
+# Create a file input widget
+file_input = pn.widgets.FileInput(name='Upload wallet data')
+file_chooser = pn.widgets.FileSelector(file_pattern="*.csv")
+## Add a pie chart - plot_1
+plot_1_title = pn.pane.Markdown("## BOT AUDIT")
+
 
 
 
 # Create the dashboard outlook 
 template = pn.template.FastListTemplate(
     title="WALLET QUICK ANALYSIS",
+    sidebar = [
+        short_title,
+        short_explanation,
+        # file_input,
+        file_chooser,
+        plot_1_title,
+        plot_1
+        ],
     main = [
         plot_1, 
         pn.Row(plot_2a, plot_2b),
