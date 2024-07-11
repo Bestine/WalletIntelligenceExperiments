@@ -91,6 +91,10 @@ plot_3b = px.scatter(clean_df,
 # Plot_5 - Bar Chart of Spend and Spend Games
 # PASS
 
+# SIDE BAR WIDGETS
+
+
+
 # Create the dashboard outlook 
 template = pn.template.FastListTemplate(
     title="WALLET QUICK ANALYSIS",
