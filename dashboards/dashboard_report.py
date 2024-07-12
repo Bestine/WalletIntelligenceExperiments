@@ -34,8 +34,9 @@ plot_1 = px.pie(bot_shield_df,
     # - Wallets with least balances(bottom 5) - row 2
 
 ## Distribution of Total Balance
-plot_2a = px.histogram(df, x="Total Balance", nbins=5,
-                       title="TOKEN GATING - Distribution of Total Balance")
+plot_2a = px.histogram(df, x="Total Balance", nbins=100,
+                       title="TOKEN GATING - Distribution of Total Balance",
+                       width=1500, height=400)
 plot_2b = px.box(df, y="Total Balance",
                  title="TOKEN GATING - Distribution of Total Balance")
 
@@ -46,7 +47,8 @@ top_balances_df = df[["Wallet Address", "Is Bot", "Total Balance"]]\
 plot_2c = px.bar(top_balances_df, 
                  x="Total Balance", y="Wallet Address", 
                  color="Is Bot", orientation='h',
-                 title="TOKEN GATING - Top 10 Balances")
+                 title="TOKEN GATING - Top 10 Balances",
+                 height=350)
 
 ## Low Balances in a bar chart
 low_balances_df = df[["Wallet Address", "Is Bot", "Total Balance"]]\
@@ -55,7 +57,8 @@ low_balances_df = df[["Wallet Address", "Is Bot", "Total Balance"]]\
 plot_2d = px.bar(low_balances_df, 
                  x="Total Balance", y="Wallet Address", 
                  color="Is Bot", orientation='h',
-                 title="TOKEN GATING - Bottom 50 Balances")
+                 title="TOKEN GATING - Bottom 50 Balances",
+                 height=350)
 
 # Plot 3 - Is about personalization
 ## The effect of Hodling against the total balance - scatter chart
@@ -107,7 +110,7 @@ translation by H. Rackham.
 ## Allow the user to choose a file 
 # Create a file input widget
 file_input = pn.widgets.FileInput(name='Upload wallet data')
-file_chooser = pn.widgets.FileSelector(file_pattern="*.csv")
+# file_chooser = pn.widgets.FileSelector(file_pattern="*.csv")
 ## Add a pie chart - plot_1
 plot_1_title = pn.pane.Markdown("## BOT AUDIT")
 
@@ -120,16 +123,17 @@ template = pn.template.FastListTemplate(
     sidebar = [
         short_title,
         short_explanation,
-        # file_input,
-        file_chooser,
+        pn.pane.Markdown("## UPLOAD A FILE"),
+        file_input,
+        # file_chooser,
         plot_1_title,
         plot_1
         ],
     main = [
-        plot_1, 
-        pn.Row(plot_2a, plot_2b),
+        plot_2a,
+        # pn.Row(plot_2a, plot_2b),
         pn.Row(plot_2c, plot_2d),
-        pn.Row(plot_3a, plot_3b)
+        # pn.Row(plot_3a, plot_3b)
         ],
     accent_base_color="#88d8b0",
     header_background="#88d8b0",
