@@ -117,9 +117,44 @@ plot_1_title = pn.pane.Markdown("## BOT AUDIT")
 
 
 
-# Create the dashboard outlook 
+# # Create the dashboard outlook 
+# template = pn.template.FastListTemplate(
+#     title="WALLET QUICK ANALYSIS",
+#     sidebar = [
+#         short_title,
+#         short_explanation,
+#         pn.pane.Markdown("## UPLOAD A FILE"),
+#         file_input,
+#         # file_chooser,
+#         plot_1_title,
+#         plot_1
+#         ],
+#     main = [
+#         plot_2a,
+#         # pn.Row(plot_2a, plot_2b),
+#         pn.Row(plot_2c, plot_2d),
+#         # pn.Row(plot_3a, plot_3b)
+#         ],
+#     accent_base_color="#88d8b0",
+#     header_background="#88d8b0",
+# )
+
+# Create a new dashboard outlook 
+## TAB 1
+bot_audit_tab = pn.Column(
+    plot_2a,
+    pn.Row(plot_2c, plot_2d)
+    )
+other_tab = pn.Column(
+    plot_3b
+    )
+
+tabs = pn.Tabs(("Bot Audit", bot_audit_tab),
+               ("Other tab", other_tab))
+
+## Create the outlook now
 template = pn.template.FastListTemplate(
-    title="WALLET QUICK ANALYSIS",
+    title = "WALLET QUICK ANALYSIS",
     sidebar = [
         short_title,
         short_explanation,
@@ -129,12 +164,7 @@ template = pn.template.FastListTemplate(
         plot_1_title,
         plot_1
         ],
-    main = [
-        plot_2a,
-        # pn.Row(plot_2a, plot_2b),
-        pn.Row(plot_2c, plot_2d),
-        # pn.Row(plot_3a, plot_3b)
-        ],
+    main = [tabs],
     accent_base_color="#88d8b0",
     header_background="#88d8b0",
 )
