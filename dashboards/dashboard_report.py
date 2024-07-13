@@ -91,17 +91,6 @@ plot_3b = px.scatter(clean_df,
                     width=1500)
 iwallet_data = clean_df.interactive()
 
-# # Plot_2 - Histogram of total balance
-# plot_2 = df["Total Balance"].hvplot.hist()
-
-# # Plot_3 - Scatter Plot of Total Balance vs Transaction Count:
-# plot_3 = df.hvplot.scatter(x="Total Balance", y="Transaction Count")
-
-# Plot_4 - Heatmap of Total Balance vs Transaction Count segmented by Status Code
-# PASS 
-
-# Plot_5 - Bar Chart of Spend and Spend Games
-# PASS
 
 # SIDE BAR WIDGETS
 ## Add a short title
@@ -117,37 +106,11 @@ translation by H. Rackham.
 ## Allow the user to choose a file 
 # Create a file input widget
 file_input = pn.widgets.FileInput(name='Upload wallet data')
-# file_chooser = pn.widgets.FileSelector(file_pattern="*.csv")
 ## Add a pie chart - plot_1
 plot_1_title = pn.pane.Markdown("## BOT AUDIT")
 
 
 print("FILE INPUT VALUE: ", file_input.value)
-
-
-
-
-# # Create the dashboard outlook 
-# template = pn.template.FastListTemplate(
-#     title="WALLET QUICK ANALYSIS",
-#     sidebar = [
-#         short_title,
-#         short_explanation,
-#         pn.pane.Markdown("## UPLOAD A FILE"),
-#         file_input,
-#         # file_chooser,
-#         plot_1_title,
-#         plot_1
-#         ],
-#     main = [
-#         plot_2a,
-#         # pn.Row(plot_2a, plot_2b),
-#         pn.Row(plot_2c, plot_2d),
-#         # pn.Row(plot_3a, plot_3b)
-#         ],
-#     accent_base_color="#88d8b0",
-#     header_background="#88d8b0",
-# )
 
 # Create a new dashboard outlook 
 ## TAB 1
