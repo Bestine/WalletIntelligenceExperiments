@@ -23,9 +23,14 @@ bot_shield_df = df["Is Bot"].value_counts().reset_index()
 
 plot_1 = px.pie(bot_shield_df, 
                  values='count', names='Is Bot',
-                 title="Composition of Bots and Non-bots",
-                 width=300, height=300,
+                 title="Composition of Bots, Non-bots",
+                 width=350, height=350,
                  hole=0.5)
+plot_1.update_layout(showlegend=False,
+                     margin=dict(l=0, r=50, t=50, b=50),
+                     annotations=[dict(text=f"{df.shape[0]}<br>WALLETS", 
+                                       showarrow=False, 
+                                       font_size=25)])
 
 # Plot 2 - TOKEN GATING 
 ## Chart ideas
@@ -82,7 +87,9 @@ clean_df = df[(df["Total Balance"]>=lower_fence)&(df["Total Balance"]<=upper_fen
 # Replot the plot_3a
 plot_3b = px.scatter(clean_df,
                     x="Hodler Score", y="Total Balance",
-                    color="Is Bot", trendline="ols")
+                    color="Is Bot", trendline="ols",
+                    width=1500)
+iwallet_data = clean_df.interactive()
 
 # # Plot_2 - Histogram of total balance
 # plot_2 = df["Total Balance"].hvplot.hist()
@@ -113,6 +120,9 @@ file_input = pn.widgets.FileInput(name='Upload wallet data')
 # file_chooser = pn.widgets.FileSelector(file_pattern="*.csv")
 ## Add a pie chart - plot_1
 plot_1_title = pn.pane.Markdown("## BOT AUDIT")
+
+
+print("FILE INPUT VALUE: ", file_input.value)
 
 
 
@@ -146,7 +156,8 @@ bot_audit_tab = pn.Column(
     pn.Row(plot_2c, plot_2d)
     )
 other_tab = pn.Column(
-    plot_3b
+    plot_3b,
+    iwallet_data
     )
 
 tabs = pn.Tabs(("Bot Audit", bot_audit_tab),
