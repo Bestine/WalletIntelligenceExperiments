@@ -110,7 +110,20 @@ file_input = pn.widgets.FileInput(name='Upload wallet data')
 plot_1_title = pn.pane.Markdown("## BOT AUDIT")
 
 
-print("FILE INPUT VALUE: ", file_input.value)
+# print("FILE INPUT VALUE: ", file_input.value)
+
+# Function to display file content
+def display_file_content(event):
+    if file_input.value is not None:
+        content = file_input.value.decode('utf-8')
+        text_area.value = content
+
+# Create a text area widget to display file content
+text_area = pn.widgets.TextAreaInput(name='File Content', height=400, width=400)
+
+# Attach the file input event to the display function
+file_input.param.watch(display_file_content, 'value')
+
 
 # Create a new dashboard outlook 
 ## TAB 1
