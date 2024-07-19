@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import hvplot.pandas  # noqa
 import hvplot.dask  # noqa
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 import panel as pn
 import plotly.express as px
 
@@ -95,7 +95,7 @@ iwallet_data = clean_df.interactive()
 # SIDE BAR WIDGETS
 ## Add a short title
 short_title = pn.pane.Markdown("# Lorem Ipsum")
-## Add a short guide
+## Add a short guide``
 short_explanation = pn.pane.Markdown("""
 The standard chunk of Lorem Ipsum used since the 1500s is reproduced 
 below for those interested. Sections 1.10.32 and 1.10.33 from "de 
@@ -108,6 +108,8 @@ translation by H. Rackham.
 file_input = pn.widgets.FileInput(name='Upload wallet data')
 ## Add a pie chart - plot_1
 plot_1_title = pn.pane.Markdown("## BOT AUDIT")
+footer_note = pn.pane.Markdown("Powered by ...")
+# Include a company l 
 
 # Create a new dashboard outlook 
 ## TAB 1
@@ -133,7 +135,8 @@ template = pn.template.FastListTemplate(
         file_input,
         # file_chooser,
         plot_1_title,
-        plot_1
+        plot_1,
+        footer_note
         ],
     main = [tabs],
     accent_base_color="#88d8b0",
