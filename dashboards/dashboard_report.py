@@ -5,6 +5,7 @@ import hvplot.dask  # noqa
 # from matplotlib import pyplot as plt
 import panel as pn
 import plotly.express as px
+import io
 
 hvplot.extension('matplotlib')
 
@@ -73,6 +74,11 @@ plot_3a = px.scatter(df,
 
 ## Regenerate the box plot by removing the outliers
 def calculate_fences(df, category):
+    """
+    Removes the outliers from the data set like extreme high balances 
+    or low balances in the wallets
+    - Returns a clean dataset with no outliers
+    """
     category_data = df[category]
     Q1 = np.percentile(category_data, 25)
     Q3 = np.percentile(category_data, 75)
@@ -105,11 +111,23 @@ translation by H. Rackham.
 """)
 ## Allow the user to choose a file 
 # Create a file input widget
-file_input = pn.widgets.FileInput(name='Upload wallet data')
+file_input = pn.widgets.FileInput(name='Upload wallet data', accept=".csv")
 ## Add a pie chart - plot_1
 plot_1_title = pn.pane.Markdown("## BOT AUDIT")
-footer_note = pn.pane.Markdown("Powered by ...")
-# Include a company l 
+footer_note = pn.pane.Markdown("Powered by THIRDWAVES lab")
+## Include a company logo
+
+# File input events
+
+## Define a function to handle file upload and update the data
+def load_data(event):
+    file = event.new
+    if file is not None:
+        data = pd.read_csv(io.BytesIO(file))
+        #update_dashboard(data)
+        print("UPDATED FILE INPUT!!!")
+
+file_input.param.watch(load_data, 'value')
 
 # Create a new dashboard outlook 
 ## TAB 1
