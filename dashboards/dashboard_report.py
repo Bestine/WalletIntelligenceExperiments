@@ -114,9 +114,8 @@ translation by H. Rackham.
 file_input = pn.widgets.FileInput(name='Upload wallet data', accept=".csv")
 ## Add a pie chart - plot_1
 plot_1_title = pn.pane.Markdown("## BOT AUDIT")
-footer_note = pn.pane.Markdown("Powered by THIRDWAVES lab")
 ## Include a company logo
-
+company_logo = pn.pane.Image('dashboards/company_logo.png')#, width=200)
 # File input events
 
 ## Define a function to handle file upload and update the data
@@ -154,7 +153,7 @@ template = pn.template.FastListTemplate(
         # file_chooser,
         plot_1_title,
         plot_1,
-        footer_note
+        company_logo
         ],
     main = [tabs],
     accent_base_color="#88d8b0",
